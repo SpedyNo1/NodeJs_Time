@@ -3,7 +3,7 @@ let app = express()
 app.set('view engine','ejs')
 let port = process.env.PORT || 3000;
 app.get('/',(req,res) =>{
-    res.render('home')
+    res.render('test')
 })
 
 app.get('/about',(req,res) =>{
