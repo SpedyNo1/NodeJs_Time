@@ -104,7 +104,8 @@ function startTime() {
     let m = today.getMinutes();
     let s = today.getSeconds();
     setTimeout(startTime, 1000);
-    if((h==0||h==6||h==12||h==1||h==16||h==17||h==18)&&m==0&&s==0){
+    if((h==0||h==6||h==12||h==1||h==16||h==17||h==18)&&m==10&&s==0){
     main()
     }
+    console.log(`${h}`+":"+`${m}`+":"+`${s}`)
 }
