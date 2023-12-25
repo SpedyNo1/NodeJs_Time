@@ -100,11 +100,12 @@ const main = async () => {
 startTime()
 function startTime() {
     const today = new Date();
-    let h = today.getHours();
-    let m = today.getMinutes();
-    let s = today.getSeconds();
+    var today1 = today.toLocaleTimeString("th-TH", {timeZone: "Asia/Bangkok"});
+    let h = today1.split(':')[0]
+    let m = today1.split(':')[1]
+    let s = today1.split(':')[2]
     setTimeout(startTime, 1000);
-    if((h==0||h==6||h==12||h==1||h==16||h==17||h==18)&&m==10&&s==0){
+    if((h==16||h==17||h==18||h==19)&&m==30&&s==0){
     main()
     }
     console.log(`${h}`+":"+`${m}`+":"+`${s}`)
