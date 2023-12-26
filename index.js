@@ -17,7 +17,6 @@ const createCarousel = require('./carouselMAKE.js');
 app.get('/',(req,res) =>{
     res.render('test')
 })
-
 app.get('/about',(req,res) =>{
     res.render('about')
 })
