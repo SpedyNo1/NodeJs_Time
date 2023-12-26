@@ -104,7 +104,7 @@ function startTime() {
     let m = today1.split(':')[1]
     let s = today1.split(':')[2]
     setTimeout(startTime, 1000*60);
-    if((h==0||h==6||h==18||h==24||h==20||h==21||h==19||h==17)&&(m==0||m==10||m==20||m==30||m==40||m==50)){
+    if((h==18||h==24||h==20||h==21||h==19||h==17)&&(m==0||m==10||m==20||m==30||m==40||m==50)){
     main()
     console.log("dsfsdf")
     }
