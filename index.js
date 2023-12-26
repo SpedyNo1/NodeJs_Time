@@ -1,5 +1,8 @@
 let express = require('express')
 let app = express()
+let h;
+let m;
+let s;
 app.set('view engine','ejs')
 let port = process.env.PORT || 3000;
 const axios = require('axios');
@@ -71,14 +74,14 @@ const main = async () => {
               if (data_influx.data[k].field === "pH_value") {
                 for (let l = data_influx.data.length - 1; l > k; l--) {
                   if (data_influx.data[l].topic.split('/')[1] === data_strapi.data[i].attributes.devices.data[j].attributes.Serial) {
-                    data1[0].contents.contents.push(pH_Buble('11.00', 2, data_influx.data[k].value.toFixed(2), data_influx.data[l].value.toFixed(2)));
+                    data1[0].contents.contents.push(pH_Buble(`${h}`+":"+`${m}`, 2, data_influx.data[k].value.toFixed(2), data_influx.data[l].value.toFixed(2)));
                     break
                   }
                 }
               } else if (data_influx.data[k].field === "DO_value") {
                 for (let l = data_influx.data.length - 1; l > k; l--) {
                   if (data_influx.data[l].topic.split('/')[1] === data_strapi.data[i].attributes.devices.data[j].attributes.Serial) {
-                    data1[0].contents.contents.push(CD_Buble('11.00', 2, data_influx.data[k].value.toFixed(2), data_influx.data[l].value.toFixed(2)));
+                    data1[0].contents.contents.push(CD_Buble(`${h}`+":"+`${m}`, 2, data_influx.data[k].value.toFixed(2), data_influx.data[l].value.toFixed(2)));
                     break
                   }
                 }
@@ -99,11 +102,11 @@ startTime()
 function startTime() {
     const today = new Date();
     var today1 = today.toLocaleTimeString("th-TH", {timeZone: "Asia/Bangkok"});
-    let h = today1.split(':')[0]
-    let m = today1.split(':')[1]
-    let s = today1.split(':')[2]
+    h = today1.split(':')[0]
+    m = today1.split(':')[1]
+    s = today1.split(':')[2]
     setTimeout(startTime, 1000*60);
-    if((h==18||h==24||h==20||h==21||h==19||h==17)&&(m==0||m==10||m==20||m==30||m==40||m==50)){
+    if((h==0||h==1||h==6||h==10||h==11)&&(m==0||m==30)){
     main()
     console.log("dsfsdf")
     }
