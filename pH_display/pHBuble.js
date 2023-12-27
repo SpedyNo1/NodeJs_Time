@@ -14,7 +14,7 @@ const pH_Buble = (time, point, pHValue, tempValue) => {
           "contents": [
             {
               "type": "text",
-              "text": "pH Sensor",
+              "text": "pH sensor",
               "weight": "bold",
               "size": "xl",
               "flex": 3,
@@ -76,7 +76,10 @@ const pH_Buble = (time, point, pHValue, tempValue) => {
             },
             {
               "type": "box",
-              "layout": "horizontal",
+              "layout": "baseline",
+              "offsetTop": "20px",
+              "width": "300px",
+              "height": "103px",
               "contents": [
                 {
                   "type": "text",
@@ -92,9 +95,10 @@ const pH_Buble = (time, point, pHValue, tempValue) => {
                   "text": "pH",
                   "size": "xl",
                   "color": "#A57F23",
-                  "gravity": "bottom",
+                  "align": "start",
+                  "gravity": "center",
                   "margin": "sm",
-                  "offsetBottom": "15px",
+                  "offsetBottom": "0px",
                   "contents": []
                 }
               ]
@@ -113,7 +117,8 @@ const pH_Buble = (time, point, pHValue, tempValue) => {
           "contents": [
             {
               "type": "text",
-              "text": `TEMP ${tempValue}  °C`,
+              "text": `TEMP ${tempValue} °C`,
+              "color": "#000000FF",
               "align": "center",
               "gravity": "center",
               "contents": []
@@ -122,8 +127,6 @@ const pH_Buble = (time, point, pHValue, tempValue) => {
         }
       ]
     }
-  
-    
   };
   return pHBuble;
 };
