@@ -115,9 +115,8 @@ function startTime() {
     m = today1.split(':')[1]
     s = today1.split(':')[2]
     setTimeout(startTime, 1000*60);
-    if((h==0||h==6||h==12||h==18||h==5)&&(m==0||m==30)){
+    if((h==0||h==6||h==12||h==18)&&(m==0)){
     main()
-    console.log("dsfsdf")
     }
     // console.log(today1)
     console.log(`${h}`+":"+`${m}`+":"+`${s}`)
