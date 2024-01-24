@@ -66,7 +66,7 @@ const pH_Buble = (time, point, pHValue, tempValue) => {
                 },
                 {
                   "type": "text",
-                  "text": `Measurement Point ${point}`,
+                  "text": `${point}`,
                   "size": "lg",
                   "color": "#A57F23",
                   "wrap": true,

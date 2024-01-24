@@ -2,65 +2,27 @@ const cover_Buble = (facName,point,des) => {
     const coverBuble = {
       "type": "bubble",
       "direction": "ltr",
-      "header": {
-        "type": "box",
-        "layout": "vertical",
-        "width": "300px",
-        "contents": [
-          {
-            "type": "box",
-            "layout": "horizontal",
-            "contents": [
-              {
-                "type": "text",
-                "text": "LSI",
-                "weight": "bold",
-                "size": "xl",
-                "flex": 3,
-                "gravity": "center",
-                "contents": []
-              },
-              {
-                "type": "image",
-                "url": "https://img2.pic.in.th/pic/Pngtreevector-clock-icon_4187265.th.png",
-                "flex": 1,
-                "size": "xs"
-              },
-              {
-                "type": "text",
-                "text": "12.00",
-                "size": "lg",
-                "color": "#414141",
-                "flex": 1,
-                "align": "end",
-                "gravity": "center",
-                "contents": []
-              }
-            ]
-          }
-        ]
-      },
       "body": {
         "type": "box",
         "layout": "vertical",
-        "width": "300px",
-        "height": "192px",
-        "backgroundColor": "#2C323D",
+        "borderWidth": "0px",
+        "backgroundColor": "#650485",
         "contents": [
           {
             "type": "box",
             "layout": "vertical",
-            "width": "300px",
+            "offsetTop": "47px",
+            "height": "250px",
             "contents": [
               {
                 "type": "box",
                 "layout": "horizontal",
-                "width": "300px",
                 "height": "60px",
                 "contents": [
                   {
                     "type": "image",
                     "url": "https://img2.pic.in.th/pic/Asset-28ca45b4b9a47eb89.png",
+                    "margin": "none",
                     "align": "start",
                     "size": "xxs",
                     "offsetTop": "3px",
@@ -69,74 +31,43 @@ const cover_Buble = (facName,point,des) => {
                   },
                   {
                     "type": "text",
-                    "text": "Measurement Point 1",
+                    "text": `${point}`,
                     "size": "lg",
-                    "color": "#4481F2",
+                    "color": "#E082FF",
+                    "align": "start",
                     "wrap": true,
+                    "offsetEnd": "40px",
                     "contents": []
                   }
                 ]
-              },
-              {
-                "type": "separator",
-                "margin": "xs"
               },
               {
                 "type": "box",
-                "layout": "horizontal",
-                "offsetTop": "20px",
-                "width": "300px",
-                "height": "103px",
+                "layout": "vertical",
+                "height": "200px",
                 "contents": [
                   {
                     "type": "text",
-                    "text": "0.00",
+                    "text": `${facName}`,
                     "size": "3xl",
-                    "color": "#31FE0EFF",
+                    "color": "#D6FF82",
                     "align": "center",
+                    "gravity": "center",
                     "wrap": true,
-                    "offsetTop": "12px",
+                    "position": "relative",
+                    "offsetTop": "10px",
                     "contents": []
-                  },
-                  {
-                    "type": "separator",
-                    "margin": "xs"
                   },
                   {
                     "type": "text",
-                    "text": "Balanced but pitting corrosion possible",
-                    "size": "md",
-                    "color": "#31FE0EFF",
-                    "align": "start",
-                    "gravity": "top",
-                    "margin": "xs",
-                    "wrap": true,
-                    "position": "relative",
-                    "offsetBottom": "3px",
-                    "offsetStart": "7px",
+                    "text": `${des}`,
+                    "size": "xs",
+                    "color": "#FFFFFFFF",
+                    "align": "center",
+                    "offsetTop": "8px",
                     "contents": []
                   }
                 ]
-              }
-            ]
-          }
-        ]
-      },
-      "footer": {
-        "type": "box",
-        "layout": "horizontal",
-        "contents": [
-          {
-            "type": "box",
-            "layout": "horizontal",
-            "contents": [
-              {
-                "type": "text",
-                "text": "TEMP  35 °C",
-                "color": "#000000FF",
-                "align": "center",
-                "gravity": "center",
-                "contents": []
               }
             ]
           }

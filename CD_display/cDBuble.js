@@ -64,7 +64,7 @@ const CD_Buble = (time, point, CDValue, tempValue) => {
                     },
                     {
                       "type": "text",
-                      "text": `Measurement Point ${point}`,
+                      "text": `${point}`,
                       "size": "lg",
                       "color": "#11D94A",
                       "wrap": true,
