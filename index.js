@@ -40,10 +40,12 @@ app.listen(port,() =>{
     console.log(`Server is running on port ${port}`)
 })
 let data1;
+let data_influx;
+let data_strapi;
 const main = async () => {
   try {
-    let data_influx = await data_influxx();
-    let data_strapi = await data_strapii();
+    data_influx = await data_influxx();
+    data_strapi = await data_strapii();
     console.log(data_influx)
     for (let i = 0; i < data_strapi.data.length; i++) {
       //console.log(data_strapi.data[i].attributes.name)
@@ -167,9 +169,8 @@ async function handleEvents(event) {
     else if (event.type == "message" && event.message.text == "check") {
       try {
         const { userId, userProfile, userName, userPic } = await getUserInformation(client, event.source.userId);
-        let data_influx = await data_influxx();
-        let data_strapi = await data_strapii();
-        console.log(data_influx)
+        data_influx = await data_influxx();
+        data_strapi = await data_strapii();
         return client.replyMessage(event.replyToken,[
           {
             type: "text",
