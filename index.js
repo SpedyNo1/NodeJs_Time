@@ -70,7 +70,7 @@ const main = async () => {
                 console.log("alcalinity : "+`${alcalinity}`)
                 console.log("pH : "+`${pH}`) 
                 let {LSI,indication} = await calculateLSI(pH,tds,temp,calcium,alcalinity)
-                //console.log(LSI)
+                console.log(LSI)
                 data1[0].contents.contents.push(LSI_Buble(`${h}` + ":" + `${m}`,data_strapi.data[i].attributes.name,LSI.toFixed(2),temp.toFixed(2)));
                 data1[0].contents.contents.push(pH_Buble(`${h}` + ":" + `${m}`,data_strapi.data[i].attributes.name,pH.toFixed(2), temp.toFixed(2)));
                 //console.log("lenn : "+`${data1[0].contents.contents.length}`)
@@ -122,7 +122,6 @@ const main = async () => {
     console.error('เกิดข้อผิดพลาดในการเรียก fetchData:', error.message);
   }
 };
-//main()
 startTime()
 function startTime() {
     const today = new Date();
@@ -217,7 +216,7 @@ async function handleEvents(event) {
               return client.replyMessage(event.replyToken,[
                 {
                   type: "text",
-                  text: "Nodata",
+                  text: "No data",
                 },
               ]);
             }
@@ -241,6 +240,5 @@ async function handleEvents(event) {
     console.error("Error handling events:", error);
   }
 }
-
 
 

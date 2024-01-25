@@ -1,4 +1,4 @@
-async function calculateLSIAsync(pH, tds, temp, calcium, alcalinity) {
+function calculateLSI(pH, tds, temp, calcium, alcalinity) {
     const A = (Math.log10(tds) - 1) / 10;
     const B = -13.12 * Math.log10(temp + 273) + 34.55;
     const C = Math.log10(calcium) - 0.4;
@@ -21,5 +21,11 @@ async function calculateLSIAsync(pH, tds, temp, calcium, alcalinity) {
     }
     return { LSI, indication }
   }
-  module.exports = calculateLSIAsync;
-  
+module.exports = calculateLSI;
+// const tds = 320;
+// const temp = 25;
+// const calcium = 150;
+// const alcalinity = 34;
+// const pH = 7.5;
+// let {LSI,indication} =  calculateLSI(pH,tds,temp,calcium,alcalinity)
+// console.log(LSI,indication)
