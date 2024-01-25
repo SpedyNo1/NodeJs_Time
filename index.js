@@ -168,9 +168,10 @@ async function handleEvents(event) {
     }
     else if (event.type == "message" && event.message.text == "check") {
       try {
-        const { userId, userProfile, userName, userPic } = await getUserInformation(client, event.source.userId);
-        data_influx = await data_influxx();
-        data_strapi = await data_strapii();
+        const { userId, userProfile, userName, userPic }  = await getUserInformation(client, event.source.userId);
+        console.log(userId)
+         // data_influx = await data_influxx();
+        // data_strapi = await data_strapii();
         return client.replyMessage(event.replyToken,[
           {
             type: "text",
