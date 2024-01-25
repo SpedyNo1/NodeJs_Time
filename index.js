@@ -208,7 +208,7 @@ async function handleEvents(event) {
           for (let j = 0; j < data_strapi.data[i].attributes.line_user.data.length; j++) {
             // console.log(data_strapi.data[i].attributes.line_user.data[j].attributes.line_UID)
             // console.log("lenn : "+`${data1[0].contents.contents.length}`)
-            if(data_strapi.data[i].attributes.line_user.data.length==userId){
+            if(data_strapi.data[i].attributes.line_user.data[j].attributes.line_UID==userId){
               return client.replyMessage(event.replyToken,data1);
             }else{
               return client.replyMessage(event.replyToken,[
@@ -236,6 +236,12 @@ async function handleEvents(event) {
     //-------------------------- END image message--------------------------------------//
   } catch (error) {
     console.error("Error handling events:", error);
+    return client.replyMessage(event.replyToken,[
+      {
+        type: "text",
+        text: "Error!!",
+      },
+    ]);
   }
 }
 
