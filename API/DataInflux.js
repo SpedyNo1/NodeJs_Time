@@ -38,7 +38,7 @@ async function fetchData() {
     let config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: 'https://linebot.dataiotapp.com/api/v1/content/read/latest',
+      url: 'https://db-api.dataiotapp.com/api/v1/content/read/latest',
       headers: { },
       data : data
     };

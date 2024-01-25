@@ -169,71 +169,62 @@ async function handleEvents(event) {
     else if (event.type == "message" && event.message.text == "check") {
       try {
         const { userId, userProfile, userName, userPic }  = await getUserInformation(client, event.source.userId);
-        console.log(userId)
-         // data_influx = await data_influxx();
-        // data_strapi = await data_strapii();
-        return client.replyMessage(event.replyToken,[
-          {
-            type: "text",
-            text: userId,
-          },
-        ]);
-        // for (let i = 0; i < data_strapi.data.length; i++) {
-        //   //console.log(data_strapi.data[i].attributes.name)
-        //   data1 = createCarousel()
-        //   data1[0].contents.contents.push(cover_Buble(data_strapi.data[i].attributes.factory, data_strapi.data[i].attributes.name, data_strapi.data[i].attributes.location))
-        //   for (let j = 0; j < data_strapi.data[i].attributes.devices.data.length; j++) {
-        //     //console.log(data_strapi.data[i].attributes.devices.data[j].attributes.Serial)
-        //     for (let k = 0; k < data_influx.data.length; k++) {
-        //       if (data_influx.data[k].topic.split('/')[2] === data_strapi.data[i].attributes.devices.data[j].attributes.Serial) {
-        //         if (data_strapi.data[i].attributes.devices.data[j].attributes.sensor === "pH") {
-        //             // const tds = 320;
-        //             // const temp = 25;
-        //             // const calcium = 150;
-        //             // const alcalinity = 34;
-        //             // const pH = 7.5;
-        //             const tds = data_strapi.data[i].attributes.tds;
-        //             const temp = data_influx.data[k].temp;
-        //             const calcium = data_strapi.data[i].attributes.calcium;
-        //             const alcalinity = data_strapi.data[i].attributes.alcalinity;
-        //             const pH = data_influx.data[k].pH_value;
-        //             console.log("tds : "+`${tds}`)
-        //             console.log("calcium : "+`${calcium}`)
-        //             console.log("temp : "+`${temp}`)
-        //             console.log("alcalinity : "+`${alcalinity}`)
-        //             console.log("pH : "+`${pH}`) 
-        //             let {LSI,indication} = await calculateLSI(pH,tds,temp,calcium,alcalinity)
-        //             //console.log(LSI)
-        //             data1[0].contents.contents.push(LSI_Buble(`${h}` + ":" + `${m}`,data_strapi.data[i].attributes.name,LSI.toFixed(2),temp.toFixed(2)));
-        //             data1[0].contents.contents.push(pH_Buble(`${h}` + ":" + `${m}`,data_strapi.data[i].attributes.name,pH.toFixed(2), temp.toFixed(2)));
-        //             //console.log("lenn : "+`${data1[0].contents.contents.length}`)
-        //         } else if (data_strapi.data[i].attributes.devices.data[j].attributes.sensor === "Conductivity"){
-        //               data1[0].contents.contents.push(CD_Buble(`${h}` + ":" + `${m}`, data_strapi.data[i].attributes.name, data_influx.data[k].conductivity_value.toFixed(2), data_influx.data[k].temp.toFixed(2)));
-        //         }
-        //       }
-        //     }
-        //   }
-        //   for (let j = 0; j < data_strapi.data[i].attributes.line_user.data.length; j++) {
-        //     // console.log(data_strapi.data[i].attributes.line_user.data[j].attributes.line_UID)
-        //     console.log("lenn : "+`${data1[0].contents.contents.length}`)
-        //     if(data_strapi.data[i].attributes.line_user.data[j].attributes.line_UID==userId){
-        //       return client.replyMessage(event.replyToken,data1);
-        //     }else{
-        //       return client.replyMessage(event.replyToken,[
-        //         {
-        //           type: "text",
-        //           text: "No data",
-        //         },
-        //       ]);
-        //     }
-        //   }
-        // }
+        data_influx = await data_influxx();
+        data_strapi = await data_strapii();
+        for (let i = 0; i < data_strapi.data.length; i++) {
+          //console.log(data_strapi.data[i].attributes.name)
+          data1 = createCarousel()
+          data1[0].contents.contents.push(cover_Buble(data_strapi.data[i].attributes.factory, data_strapi.data[i].attributes.name, data_strapi.data[i].attributes.location))
+          for (let j = 0; j < data_strapi.data[i].attributes.devices.data.length; j++) {
+            //console.log(data_strapi.data[i].attributes.devices.data[j].attributes.Serial)
+            for (let k = 0; k < data_influx.data.length; k++) {
+              if (data_influx.data[k].topic.split('/')[2] === data_strapi.data[i].attributes.devices.data[j].attributes.Serial) {
+                if (data_strapi.data[i].attributes.devices.data[j].attributes.sensor === "pH") {
+                    // const tds = 320;
+                    // const temp = 25;
+                    // const calcium = 150;
+                    // const alcalinity = 34;
+                    // const pH = 7.5;
+                    const tds = data_strapi.data[i].attributes.tds;
+                    const temp = data_influx.data[k].temp;
+                    const calcium = data_strapi.data[i].attributes.calcium;
+                    const alcalinity = data_strapi.data[i].attributes.alcalinity;
+                    const pH = data_influx.data[k].pH_value;
+                    console.log("tds : "+`${tds}`)
+                    console.log("calcium : "+`${calcium}`)
+                    console.log("temp : "+`${temp}`)
+                    console.log("alcalinity : "+`${alcalinity}`)
+                    console.log("pH : "+`${pH}`) 
+                    let {LSI,indication} = await calculateLSI(pH,tds,temp,calcium,alcalinity)
+                    //console.log(LSI)
+                    data1[0].contents.contents.push(LSI_Buble(`${h}` + ":" + `${m}`,data_strapi.data[i].attributes.name,LSI.toFixed(2),temp.toFixed(2)));
+                    data1[0].contents.contents.push(pH_Buble(`${h}` + ":" + `${m}`,data_strapi.data[i].attributes.name,pH.toFixed(2), temp.toFixed(2)));
+                    //console.log("lenn : "+`${data1[0].contents.contents.length}`)
+                } else if (data_strapi.data[i].attributes.devices.data[j].attributes.sensor === "Conductivity"){
+                      data1[0].contents.contents.push(CD_Buble(`${h}` + ":" + `${m}`, data_strapi.data[i].attributes.name, data_influx.data[k].conductivity_value.toFixed(2), data_influx.data[k].temp.toFixed(2)));
+                }
+              }
+            }
+          }
+          for (let j = 0; j < data_strapi.data[i].attributes.line_user.data.length; j++) {
+            if(data_strapi.data[i].attributes.line_user.data[j].attributes.line_UID==userId){
+              return client.replyMessage(event.replyToken,data1);
+            }else{
+              return client.replyMessage(event.replyToken,[
+                {
+                  type: "text",
+                  text: "No data",
+                },
+              ]);
+            }
+          }
+        }
       } catch (error) {
         console.error(error);
         return client.replyMessage(event.replyToken,[
           {
             type: "text",
-            text: "dfsdf",
+            text: "No data1",
           },
         ]);
       }
