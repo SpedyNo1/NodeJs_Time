@@ -130,12 +130,10 @@ function startTime() {
     m = today1.split(':')[1]
     s = today1.split(':')[2]
     setTimeout(startTime, 60000);
-    console.log(today)
+    console.log(`${h}`+":"+`${m}`+":"+`${s}`)
     if((h==0||h==6||h==12||h==18)&&(m==0)){
     main()
     }
-    console.log(today)
-    console.log(`${h}`+":"+`${m}`+":"+`${s}`)
 }
 //---------------------------------------------------------------------------------------------------------------
 app.post("/webhook", line.middleware(config), (req, res) => {
