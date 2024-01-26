@@ -124,20 +124,20 @@ const main = async () => {
     console.error('เกิดข้อผิดพลาดในการเรียก fetchData:', error.message);
   }
 };
-main()
-// startTime()
-// function startTime() {
-//     const today = new Date();
-//     var today1 = today.toLocaleTimeString("th-TH", {timeZone: "Asia/Bangkok"});
-//     h = today1.split(':')[0]
-//     m = today1.split(':')[1]
-//     s = today1.split(':')[2]
-//     setTimeout(startTime, 60000);
-//     console.log(`${h}`+":"+`${m}`+":"+`${s}`)
-//     if((h==0||h==6||h==12||h==18)&&(m==0)){
-//     main()
-//     }
-// }
+//main()
+startTime()
+function startTime() {
+    const today = new Date();
+    var today1 = today.toLocaleTimeString("th-TH", {timeZone: "Asia/Bangkok"});
+    h = today1.split(':')[0]
+    m = today1.split(':')[1]
+    s = today1.split(':')[2]
+    setTimeout(startTime, 60000);
+    console.log(`${h}`+":"+`${m}`+":"+`${s}`)
+    if((h==0||h==6||h==12||h==18)&&(m==0)){
+    main()
+    }
+}
 //---------------------------------------------------------------------------------------------------------------
 app.post("/webhook", line.middleware(config), (req, res) => {
   Promise.all([req.body.events.map(handleEvents)]).then((result) =>
