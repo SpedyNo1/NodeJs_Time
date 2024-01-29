@@ -203,8 +203,8 @@ async function handleEvents(event) {
           }
           for (let j = 0; j < data_strapi.data[i].attributes.line_user.data.length; j++) {
             if (data_strapi.data[i].attributes.line_user.data[j].attributes.line_UID == userId) {
-               client.replyMessage(event.replyToken, data1);
-               console.log("-----------------------------")
+              console.log("-----------------------------")
+               return client.replyMessage(event.replyToken, data1);
             } 
             // else {
             //   client.replyMessage(event.replyToken, [
