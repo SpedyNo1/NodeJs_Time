@@ -148,14 +148,12 @@ async function handleEvents(event) {
   console.log(event);
   try {
     if (event.type == "follow") {
-      const { userId, userProfile, userName, userPic } =
-        await getUserInformation(client, event.source.userId);
+      const { userId, userProfile, userName, userPic } = await getUserInformation(client, event.source.userId);
       return welcomeMessage(event.replyToken, userName);
     }
-    if (event.type == "message" && event.message.text == "Register") {
+    else if (event.type == "message" && event.message.text == "Register") {
       try {
-        const { userId, userProfile, userName, userPic } =
-          await getUserInformation(client, event.source.userId);
+        const { userId, userProfile, userName, userPic } = await getUserInformation(client, event.source.userId);
         const notitext = await userRegis(userName, userId, userPic);
         return client.replyMessage(event.replyToken, [
           {
@@ -181,11 +179,6 @@ async function handleEvents(event) {
             for (let k = 0; k < data_influx.data.length; k++) {
               if (data_influx.data[k].topic.split('/')[2] === data_strapi.data[i].attributes.devices.data[j].attributes.Serial) {
                 if (data_strapi.data[i].attributes.devices.data[j].attributes.sensor === "pH") {
-                  // const tds = 320;
-                  // const temp = 25;
-                  // const calcium = 150;
-                  // const alcalinity = 34;
-                  // const pH = 7.5;
                   const tds = data_strapi.data[i].attributes.tds;
                   const temp = data_influx.data[k].temp;
                   const calcium = data_strapi.data[i].attributes.calcium;
@@ -209,15 +202,16 @@ async function handleEvents(event) {
           }
           for (let j = 0; j < data_strapi.data[i].attributes.line_user.data.length; j++) {
             if (data_strapi.data[i].attributes.line_user.data[j].attributes.line_UID == userId) {
-              client.replyMessage(event.replyToken, data1);
-            } else {
-              client.replyMessage(event.replyToken, [
-                {
-                  type: "text",
-                  text: "No data",
-                },
-              ]);
-            }
+              return client.replyMessage(event.replyToken, data1);
+            } 
+            // else {
+            //   client.replyMessage(event.replyToken, [
+            //     {
+            //       type: "text",
+            //       text: "No data",
+            //     },
+            //   ]);
+            // }
           }
         }
       } catch (error) {
