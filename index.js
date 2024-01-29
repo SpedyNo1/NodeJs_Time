@@ -171,6 +171,7 @@ async function handleEvents(event) {
         data_influx = await data_influxx();
         data_strapi = await data_strapii();
         for (let i = 0; i < data_strapi.data.length; i++) {
+          console.log("*********************")
           //console.log(data_strapi.data[i].attributes.name)
           data1 = createCarousel()
           data1[0].contents.contents.push(cover_Buble(data_strapi.data[i].attributes.factory, data_strapi.data[i].attributes.name, data_strapi.data[i].attributes.location))
@@ -203,6 +204,7 @@ async function handleEvents(event) {
           for (let j = 0; j < data_strapi.data[i].attributes.line_user.data.length; j++) {
             if (data_strapi.data[i].attributes.line_user.data[j].attributes.line_UID == userId) {
                client.replyMessage(event.replyToken, data1);
+               console.log("-----------------------------")
             } 
             // else {
             //   client.replyMessage(event.replyToken, [
@@ -231,8 +233,6 @@ async function handleEvents(event) {
         },
       ]);
     }
-
-    //-------------------------- END image message--------------------------------------//
   } catch (error) {
     console.error("Error handling events:", error);
     return client.replyMessage(event.replyToken, [
