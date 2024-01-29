@@ -202,7 +202,7 @@ async function handleEvents(event) {
           }
           for (let j = 0; j < data_strapi.data[i].attributes.line_user.data.length; j++) {
             if (data_strapi.data[i].attributes.line_user.data[j].attributes.line_UID == userId) {
-              return client.replyMessage(event.replyToken, data1);
+               client.replyMessage(event.replyToken, data1);
             } 
             // else {
             //   client.replyMessage(event.replyToken, [
