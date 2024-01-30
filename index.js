@@ -46,7 +46,6 @@ const main = async () => {
   try {
     data_influx = await data_influxx();
     data_strapi = await data_strapii();
-    console.log(data_influx)
     for (let i = 0; i < data_strapi.data.length; i++) {
       //console.log(data_strapi.data[i].attributes.name)
       data1 = createCarousel()
@@ -124,20 +123,46 @@ const main = async () => {
     console.error('เกิดข้อผิดพลาดในการเรียก fetchData:', error.message);
   }
 };
-//main()
+const timer2 = [24, 6, 12, 18];
+let start =1;
 startTime()
 function startTime() {
-    const today = new Date();
-    var today1 = today.toLocaleTimeString("th-TH", {timeZone: "Asia/Bangkok"});
-    h = today1.split(':')[0]
-    m = today1.split(':')[1]
-    s = today1.split(':')[2]
-    setTimeout(startTime, 60000);
-    console.log(`${h}`+":"+`${m}`+":"+`${s}`)
-    if((h==0||h==6||h==12||h==18)&&(m==0)){
+  let test = []
+  const today = new Date();
+  var today1 = today.toLocaleTimeString("th-TH", { timeZone: "Asia/Bangkok" });
+  h = today1.split(':')[0]
+  m = today1.split(':')[1]
+  s = today1.split(':')[2]
+  console.log(`${h}` + ":" + `${m}` + ":" + `${s}`)
+  let all = (h * 60 * 60) + (m * 60) + (s * 60)
+  for (let i = 0; i < timer2.length; i++) {
+    test[i] = timer2[i] * 60 * 60 - all
+  }
+  const formatSeconds = s => [parseInt(s / 60 / 60), parseInt(s / 60 % 60), parseInt(s % 60)].join(':').replace(/\b(\d)\b/g, '0$1');
+  let positiveNumbers = test.filter(num => num > 0);
+  let minPositive = Math.min(...positiveNumbers);
+  console.log(minPositive, formatSeconds(minPositive))
+  if(!start){
     main()
-    }
+  }else{
+    start=0
+  }
+  setTimeout(startTime, minPositive*1000);
 }
+
+// startTime()
+// function startTime() {
+//     const today = new Date();
+//     var today1 = today.toLocaleTimeString("th-TH", {timeZone: "Asia/Bangkok"});
+//     h = today1.split(':')[0]
+//     m = today1.split(':')[1]
+//     s = today1.split(':')[2]
+//     setTimeout(startTime, 1000);
+//     console.log(`${h}`+":"+`${m}`+":"+`${s}`)
+//     if((h==0||h==6||h==12||h==18)&&(m==0)){
+//     main()
+//     }
+// }
 //---------------------------------------------------------------------------------------------------------------
 app.post("/webhook", line.middleware(config), (req, res) => {
   Promise.all([req.body.events.map(handleEvents)]).then((result) =>
@@ -205,8 +230,8 @@ async function handleEvents(event) {
             if (data_strapi.data[i].attributes.line_user.data[j].attributes.line_UID == userId) {
               console.log("-----------------------------")
               line_send_data(data1, userId)
-               //return client.replyMessage(event.replyToken, data1);
-            } 
+              //return client.replyMessage(event.replyToken, data1);
+            }
             // else {
             //   client.replyMessage(event.replyToken, [
             //     {
