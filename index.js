@@ -124,30 +124,30 @@ const main = async () => {
   }
 };
 const timer2 = [24, 6, 12, 18];
-let start =1;
+let start = 1;
 startTime()
 function startTime() {
   let test = []
   const today = new Date();
   var today1 = today.toLocaleTimeString("th-TH", { timeZone: "Asia/Bangkok" });
-  h = today1.split(':')[0]
-  m = today1.split(':')[1]
-  s = today1.split(':')[2]
+  h = parseInt(today1.split(':')[0])
+  m = parseInt(today1.split(':')[1])
+  s = parseInt(today1.split(':')[2])
   console.log(`${h}` + ":" + `${m}` + ":" + `${s}`)
-  let all = (h * 60 * 60) + (m * 60) + (s * 60)
+  let all = (h * 60 * 60) + (m * 60) + (s)
   for (let i = 0; i < timer2.length; i++) {
-    test[i] = timer2[i] * 60 * 60 - all
+    test[i] = (timer2[i] * 60 * 60) - all
   }
   const formatSeconds = s => [parseInt(s / 60 / 60), parseInt(s / 60 % 60), parseInt(s % 60)].join(':').replace(/\b(\d)\b/g, '0$1');
   let positiveNumbers = test.filter(num => num > 0);
   let minPositive = Math.min(...positiveNumbers);
   console.log(minPositive, formatSeconds(minPositive))
-  if(!start){
+  if (!start) {
     main()
-  }else{
-    start=0
+  } else {
+    start = 0
   }
-  setTimeout(startTime, minPositive*1000);
+  setTimeout(startTime, minPositive * 1000);
 }
 
 // startTime()
