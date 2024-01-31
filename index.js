@@ -27,6 +27,13 @@ const calculateLSI = require("./API/calculateLSI.js");
 let h;
 let m;
 let s;
+let data1;
+let data_influx;
+let data_strapi;
+const timer2 = [24, 6, 12, 18];
+let count = 0;
+let sort_min_positive;
+const formatSeconds = s => [parseInt(s / 60 / 60), parseInt(s / 60 % 60), parseInt(s % 60)].join(':').replace(/\b(\d)\b/g, '0$1');
 app.get('/', (req, res) => {
   res.render('test')
 })
@@ -39,9 +46,6 @@ app.get("/test", (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)
 })
-let data1;
-let data_influx;
-let data_strapi;
 const main = async () => {
   try {
     data_influx = await data_influxx();
@@ -87,45 +91,13 @@ const main = async () => {
         line_send_data(data1, data_strapi.data[i].attributes.line_user.data[j].attributes.line_UID)
       }
     }
-    // for (let i = 0; i < data_strapi.data.length; i++) {
-    //   //console.log(response.data.data[i])
-    //   if (data_strapi.data[i].attributes.confirmed == true) {
-    //     data1 = createCarousel()
-    //     //console.log(response.data.data[i].attributes.devices.data)
-    //     data1[0].contents.contents.push(cover_Buble(data_strapi.data[i].attributes.site,'4','This location is on tower1'))
-    //     //console.log(data_strapi.data[i].attributes.line_UID)
-    //     for (let j = 0; j < data_strapi.data[i].attributes.devices.data.length; j++) {
-    //       //console.log(data_strapi.data[i].attributes.devices.data[j].attributes.Serial)
-    //       for (let k = 0; k < data_influx.data.length; k++) {
-    //         if (data_influx.data[k].topic.split('/')[1] === data_strapi.data[i].attributes.devices.data[j].attributes.Serial) {
-    //           if (data_influx.data[k].field === "pH_value") {
-    //             for (let l = data_influx.data.length - 1; l > k; l--) {
-    //               if (data_influx.data[l].topic.split('/')[1] === data_strapi.data[i].attributes.devices.data[j].attributes.Serial) {
-    //                 data1[0].contents.contents.push(pH_Buble(`${h}`+":"+`${m}`, 2, data_influx.data[k].value.toFixed(2), data_influx.data[l].value.toFixed(2)));
-    //                 break
-    //               }
-    //             }
-    //           } else if (data_influx.data[k].field === "DO_value") {
-    //             for (let l = data_influx.data.length - 1; l > k; l--) {
-    //               if (data_influx.data[l].topic.split('/')[1] === data_strapi.data[i].attributes.devices.data[j].attributes.Serial) {
-    //                 data1[0].contents.contents.push(CD_Buble(`${h}`+":"+`${m}`, 2, data_influx.data[k].value.toFixed(2), data_influx.data[l].value.toFixed(2)));
-    //                 break
-    //               }
-    //             }
-    //           }
-    //         }
-    //       }
-    //     }
-    //     line_send_data(data1,data_strapi.data[i].attributes.line_UID)
-    //   }
-    // }
+    return;
   } catch (error) {
     console.error('เกิดข้อผิดพลาดในการเรียก fetchData:', error.message);
   }
 };
-const timer2 = [24, 6, 12, 18];
-let start = 1;
 startTime()
+time_counter()
 function startTime() {
   let test = []
   const today = new Date();
@@ -134,22 +106,25 @@ function startTime() {
   m = parseInt(today1.split(':')[1])
   s = parseInt(today1.split(':')[2])
   console.log(`${h}` + ":" + `${m}` + ":" + `${s}`)
-  let all = (h * 60 * 60) + (m * 60) + (s)
+  let all = (h * 60 * 60) + (m * 60)
   for (let i = 0; i < timer2.length; i++) {
     test[i] = (timer2[i] * 60 * 60) - all
   }
-  const formatSeconds = s => [parseInt(s / 60 / 60), parseInt(s / 60 % 60), parseInt(s % 60)].join(':').replace(/\b(\d)\b/g, '0$1');
   let positiveNumbers = test.filter(num => num > 0);
-  let minPositive = Math.min(...positiveNumbers);
-  console.log(minPositive, formatSeconds(minPositive))
-  if (!start) {
-    main()
-  } else {
-    start = 0
-  }
-  setTimeout(startTime, minPositive * 1000);
+  sort_min_positive = Math.min(...positiveNumbers)/60;
+  console.log(sort_min_positive,"MIN", formatSeconds(sort_min_positive*60))
+  count = 0;
 }
-
+function time_counter(){
+if(count!=sort_min_positive){
+  count++;
+  console.log(count,sort_min_positive)
+}else{
+  startTime();
+  main();
+}
+setTimeout(time_counter,1000*60);
+}
 // startTime()
 // function startTime() {
 //     const today = new Date();
@@ -196,7 +171,6 @@ async function handleEvents(event) {
         data_influx = await data_influxx();
         data_strapi = await data_strapii();
         for (let i = 0; i < data_strapi.data.length; i++) {
-          console.log("*********************")
           //console.log(data_strapi.data[i].attributes.name)
           data1 = createCarousel()
           data1[0].contents.contents.push(cover_Buble(data_strapi.data[i].attributes.factory, data_strapi.data[i].attributes.name, data_strapi.data[i].attributes.location))
@@ -228,9 +202,7 @@ async function handleEvents(event) {
           }
           for (let j = 0; j < data_strapi.data[i].attributes.line_user.data.length; j++) {
             if (data_strapi.data[i].attributes.line_user.data[j].attributes.line_UID == userId) {
-              console.log("-----------------------------")
               line_send_data(data1, userId)
-              //return client.replyMessage(event.replyToken, data1);
             }
             // else {
             //   client.replyMessage(event.replyToken, [
