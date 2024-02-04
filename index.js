@@ -13,6 +13,7 @@ const data_influxx = require('./API/DataInflux.js');
 const data_strapii = require('./API/DataStrapi.js');
 const data_testt = require('./API/DataTest.js');
 const line_send_data = require('./API/LineSendData.js');
+const mqtts_line = require('./mqtts/mqtts.js');
 const pH_Buble = require('./pH_display/pHBuble.js');
 const pH_Flex = require('./pH_display/pHFlex.js');
 const CD_Buble = require('./CD_display/cDBuble.js');
@@ -28,8 +29,6 @@ let h;
 let m;
 let s;
 let data1;
-let data_influx;
-let data_strapi;
 const timer2 = [24, 6, 12, 18];
 let count = 0;
 let sort_min_positive;
@@ -46,10 +45,11 @@ app.get("/test", (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)
 })
+mqtts_line()
 const main = async () => {
   try {
-    data_influx = await data_influxx();
-    data_strapi = await data_strapii();
+    let data_influx = await data_influxx();
+    let data_strapi = await data_strapii();
     for (let i = 0; i < data_strapi.data.length; i++) {
       //console.log(data_strapi.data[i].attributes.name)
       data1 = createCarousel()
@@ -204,14 +204,6 @@ async function handleEvents(event) {
             if (data_strapi.data[i].attributes.line_user.data[j].attributes.line_UID == userId) {
               line_send_data(data1, userId)
             }
-            // else {
-            //   client.replyMessage(event.replyToken, [
-            //     {
-            //       type: "text",
-            //       text: "No data",
-            //     },
-            //   ]);
-            // }
           }
         }
       } catch (error) {
