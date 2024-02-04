@@ -44,7 +44,6 @@ client.on('error', (error) => {
 })
 client.on('message', (topic, payload) => {
   //console.log('Received Message:', topic, payload.toString())
-  let demo1 = JSON.parse(payload.toString())
   let mes=[
     {
         "type":"text",
@@ -52,7 +51,6 @@ client.on('message', (topic, payload) => {
     }
 ]
   line_send_data(mes,"Ufe028284bac6e239117d315cb2897c63")
-  console.log(demo1.device)
 })
 }
 module.exports = mqtts;
