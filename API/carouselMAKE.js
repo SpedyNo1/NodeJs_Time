@@ -9,4 +9,4 @@ const createCarousel = () => {
 
       }];
     }
-    module.exports  =  createCarousel;
+module.exports  =  createCarousel;
