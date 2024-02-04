@@ -169,7 +169,8 @@ async function handleEvents(event) {
       try {
         const { userId, userProfile, userName, userPic } = await getUserInformation(client, event.source.userId);
         data_influx = await data_influxx();
-        data_strapi = await data_strapii();
+        data_strapi = await data_strapii(); 
+        let check_line =0;
         for (let i = 0; i < data_strapi.data.length; i++) {
           //console.log(data_strapi.data[i].attributes.name)
           data1 = createCarousel()
@@ -203,15 +204,24 @@ async function handleEvents(event) {
           for (let j = 0; j < data_strapi.data[i].attributes.line_user.data.length; j++) {
             if (data_strapi.data[i].attributes.line_user.data[j].attributes.line_UID == userId) {
               line_send_data(data1, userId)
+              check_line++;
             }
           }
+        }
+        if(check_line==0){
+          return client.replyMessage(event.replyToken, [
+            {
+              type: "text",
+              text: "No data",
+            },
+          ]);
         }
       } catch (error) {
         console.error(error);
         return client.replyMessage(event.replyToken, [
           {
             type: "text",
-            text: "No data1",
+            text: "No data",
           },
         ]);
       }
