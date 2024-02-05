@@ -26,7 +26,7 @@ const { formToJSON } = require('axios');
   }
 
   const client = mqtt.connect(connectUrl, options)
-  const topic = "test/1"
+  const topic = "test/2"
   const qos = 0
   client.on('connect', () => {
     console.log(`${protocol}: Connected`)
