@@ -1,5 +1,4 @@
 const line = require('@line/bot-sdk');
-
 const createLineClient = () => {
     const config = {
         channelAccessToken: process.env.token,
