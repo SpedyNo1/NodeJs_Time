@@ -57,7 +57,7 @@ const main = async () => {
       for (let j = 0; j < data_strapi.data[i].attributes.devices.data.length; j++) {
         //console.log(data_strapi.data[i].attributes.devices.data[j].attributes.Serial)
         for (let k = 0; k < data_influx.data.length; k++) {
-          if (data_influx.data[k].topic.split('/')[2] === data_strapi.data[i].attributes.devices.data[j].attributes.Serial) {
+          if (data_influx.data[k].topic.split('/')[2] === data_strapi.data[i].attributes.devices.data[j].attributes.serialnumber) {
             if (data_strapi.data[i].attributes.devices.data[j].attributes.sensor === "pH") {
               // const tds = 320;
               // const temp = 25;
@@ -79,7 +79,7 @@ const main = async () => {
               data1[0].contents.contents.push(LSI_Buble(`${h}` + ":" + `${m}`, data_strapi.data[i].attributes.name, LSI.toFixed(2), temp.toFixed(2)));
               data1[0].contents.contents.push(pH_Buble(`${h}` + ":" + `${m}`, data_strapi.data[i].attributes.name, pH.toFixed(2), temp.toFixed(2)));
               //console.log("lenn : "+`${data1[0].contents.contents.length}`)
-            } else if (data_strapi.data[i].attributes.devices.data[j].attributes.sensor === "Conductivity") {
+            } else if (data_strapi.data[i].attributes.devices.data[j].attributes.sensor === "conductivity") {
               data1[0].contents.contents.push(CD_Buble(`${h}` + ":" + `${m}`, data_strapi.data[i].attributes.name, data_influx.data[k].conductivity_value.toFixed(2), data_influx.data[k].temp.toFixed(2)));
             }
           }
@@ -121,7 +121,7 @@ if(count!=sort_min_positive){
   console.log(count,sort_min_positive)
 }else{
   startTime();
-  main();
+  //main();
 }
 setTimeout(time_counter,1000*60);
 }
@@ -165,7 +165,7 @@ async function handleEvents(event) {
         console.error(error);
       }
     }
-    else if (event.type == "message" && event.message.text == "check") {
+    else if (event.type == "message" && event.message.text == "Check") {
       try {
         const { userId, userProfile, userName, userPic } = await getUserInformation(client, event.source.userId);
         data_influx = await data_influxx();
@@ -195,7 +195,7 @@ async function handleEvents(event) {
                   data1[0].contents.contents.push(LSI_Buble(`${h}` + ":" + `${m}`, data_strapi.data[i].attributes.name, LSI.toFixed(2), temp.toFixed(2)));
                   data1[0].contents.contents.push(pH_Buble(`${h}` + ":" + `${m}`, data_strapi.data[i].attributes.name, pH.toFixed(2), temp.toFixed(2)));
                   //console.log("lenn : "+`${data1[0].contents.contents.length}`)
-                } else if (data_strapi.data[i].attributes.devices.data[j].attributes.sensor === "Conductivity") {
+                } else if (data_strapi.data[i].attributes.devices.data[j].attributes.sensor === "conductivity") {
                   data1[0].contents.contents.push(CD_Buble(`${h}` + ":" + `${m}`, data_strapi.data[i].attributes.name, data_influx.data[k].conductivity_value.toFixed(2), data_influx.data[k].temp.toFixed(2)));
                 }
               }
