@@ -12,7 +12,7 @@ async function sendFlexMessage(mes,UID) {
       url: 'https://api.line.me/v2/bot/message/push',
       headers: {
         Authorization:
-        'Bearer RnTjMKvVD5DJ2SOlRLk1RaRQBKQrcSsMKcqpTRHDc4pZdPwYDjZqtS/ZKtTmL2dFe6dA13+JZn1o2eFDZUSKylHVTDYMQ5tvs6hIISYWxFn1CEu6QN36A7e5iyuP3nHvAyWgwHQmjylpyYvxNQfLuwdB04t89/1O/w1cDnyilFU=',
+        'Bearer 9u+EZFdUZamKg8xgz/goisGLtMDjeZZ1i6FphDqb7TwvGwkbNGa2yuy6+o9bpr1L3GCgeZTqSqwLXReOkKnqYcX40tcmtNoi7sfY2OUCEDLPVV2M9ctz5L2FgjroDgCgepR8Sj9I4XbMA4yeyYlmeAdB04t89/1O/w1cDnyilFU=',
         'Content-Type': 'application/json',
       },
       data: data,

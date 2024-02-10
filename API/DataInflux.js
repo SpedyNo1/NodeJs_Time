@@ -38,7 +38,7 @@ async function fetchData() {
     let config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: 'https://db-api.dataiotapp.com/api/v1/content/read/latest',
+      url: 'http://localhost:8000/api/v1/content/read/latest',
       headers: { },
       data : data
     };

@@ -45,11 +45,16 @@ app.get("/test", (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)
 })
-mqtts_line()
+//mqtts_line()
 const main = async () => {
   try {
     let data_influx = await data_influxx();
     let data_strapi = await data_strapii();
+    const today = new Date();
+    var today1 = today.toLocaleTimeString("th-TH", { timeZone: "Asia/Bangkok" });
+    h = parseInt(today1.split(':')[0])
+    m = parseInt(today1.split(':')[1])
+    s = parseInt(today1.split(':')[2])
     for (let i = 0; i < data_strapi.data.length; i++) {
       //console.log(data_strapi.data[i].attributes.name)
       data1 = createCarousel()
@@ -59,16 +64,16 @@ const main = async () => {
         for (let k = 0; k < data_influx.data.length; k++) {
           if (data_influx.data[k].topic.split('/')[2] === data_strapi.data[i].attributes.devices.data[j].attributes.serialnumber) {
             if (data_strapi.data[i].attributes.devices.data[j].attributes.sensor === "pH") {
-              // const tds = 320;
-              // const temp = 25;
-              // const calcium = 150;
-              // const alcalinity = 34;
-              // const pH = 7.5;
-              const tds = data_strapi.data[i].attributes.tds;
-              const temp = data_influx.data[k].temp;
-              const calcium = data_strapi.data[i].attributes.calcium;
-              const alcalinity = data_strapi.data[i].attributes.alcalinity;
-              const pH = data_influx.data[k].pH_value;
+              const tds = 320;
+              const temp = 25;
+              const calcium = 150;
+              const alcalinity = 34;
+              const pH = 7.5;
+              // const tds = data_strapi.data[i].attributes.tds;
+              // const temp = data_influx.data[k].temp;
+              // const calcium = data_strapi.data[i].attributes.calcium;
+              // const alcalinity = data_strapi.data[i].attributes.alcalinity;
+              // const pH = data_influx.data[k].pH_value;
               console.log("tds : " + `${tds}`)
               console.log("calcium : " + `${calcium}`)
               console.log("temp : " + `${temp}`)
@@ -85,10 +90,11 @@ const main = async () => {
           }
         }
       }
-      for (let j = 0; j < data_strapi.data[i].attributes.line_user.data.length; j++) {
+      for (let j = 0; j < data_strapi.data[i].attributes.line_users.data.length; j++) {
         // console.log(data_strapi.data[i].attributes.line_user.data[j].attributes.line_UID)
         // console.log("lenn : "+`${data1[0].contents.contents.length}`)
-        line_send_data(data1, data_strapi.data[i].attributes.line_user.data[j].attributes.line_UID)
+        console.log(data_strapi.data[i].attributes.line_users.data[j].attributes.line_UID)
+        line_send_data(data1, data_strapi.data[i].attributes.line_users.data[j].attributes.line_UID)
       }
     }
     return;
@@ -96,35 +102,36 @@ const main = async () => {
     console.error('เกิดข้อผิดพลาดในการเรียก fetchData:', error.message);
   }
 };
-startTime()
-time_counter()
-function startTime() {
-  let test = []
-  const today = new Date();
-  var today1 = today.toLocaleTimeString("th-TH", { timeZone: "Asia/Bangkok" });
-  h = parseInt(today1.split(':')[0])
-  m = parseInt(today1.split(':')[1])
-  s = parseInt(today1.split(':')[2])
-  console.log(`${h}` + ":" + `${m}` + ":" + `${s}`)
-  let all = (h * 60 * 60) + (m * 60)
-  for (let i = 0; i < timer2.length; i++) {
-    test[i] = (timer2[i] * 60 * 60) - all
-  }
-  let positiveNumbers = test.filter(num => num > 0);
-  sort_min_positive = Math.min(...positiveNumbers)/60;
-  console.log(sort_min_positive,"MIN", formatSeconds(sort_min_positive*60))
-  count = 0;
-}
-function time_counter(){
-if(count!=sort_min_positive){
-  count++;
-  console.log(count,sort_min_positive)
-}else{
-  startTime();
-  //main();
-}
-setTimeout(time_counter,1000*60);
-}
+// startTime()
+// time_counter()
+// function startTime() {
+//   let test = []
+//   const today = new Date();
+//   var today1 = today.toLocaleTimeString("th-TH", { timeZone: "Asia/Bangkok" });
+//   h = parseInt(today1.split(':')[0])
+//   m = parseInt(today1.split(':')[1])
+//   s = parseInt(today1.split(':')[2])
+//   console.log(`${h}` + ":" + `${m}` + ":" + `${s}`)
+//   let all = (h * 60 * 60) + (m * 60)
+//   for (let i = 0; i < timer2.length; i++) {
+//     test[i] = (timer2[i] * 60 * 60) - all
+//   }
+//   let positiveNumbers = test.filter(num => num > 0);
+//   sort_min_positive = Math.min(...positiveNumbers)/60;
+//   console.log(sort_min_positive,"MIN", formatSeconds(sort_min_positive*60))
+//   count = 0;
+// }
+// function time_counter(){
+// if(count!=sort_min_positive){
+//   count++;
+//   console.log(count,sort_min_positive)
+// }else{
+//   startTime();
+//   //main();
+// }
+// setTimeout(time_counter,1000*60);
+// }
+main()
 // startTime()
 // function startTime() {
 //     const today = new Date();
@@ -170,6 +177,11 @@ async function handleEvents(event) {
         const { userId, userProfile, userName, userPic } = await getUserInformation(client, event.source.userId);
         data_influx = await data_influxx();
         data_strapi = await data_strapii(); 
+        const today = new Date();
+        var today1 = today.toLocaleTimeString("th-TH", { timeZone: "Asia/Bangkok" });
+        h = parseInt(today1.split(':')[0])
+        m = parseInt(today1.split(':')[1])
+        s = parseInt(today1.split(':')[2])
         let check_line =0;
         for (let i = 0; i < data_strapi.data.length; i++) {
           //console.log(data_strapi.data[i].attributes.name)
@@ -201,8 +213,8 @@ async function handleEvents(event) {
               }
             }
           }
-          for (let j = 0; j < data_strapi.data[i].attributes.line_user.data.length; j++) {
-            if (data_strapi.data[i].attributes.line_user.data[j].attributes.line_UID == userId) {
+          for (let j = 0; j < data_strapi.data[i].attributes.line_users.data.length; j++) {
+            if (data_strapi.data[i].attributes.line_users.data[j].attributes.line_UID == userId) {
               line_send_data(data1, userId)
               check_line++;
             }
