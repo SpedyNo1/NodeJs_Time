@@ -179,42 +179,51 @@ async function handleEvents(event) {
     else if (event.type == "message" && event.message.text == "Check") {
       try {
         const { userId, userProfile, userName, userPic } = await getUserInformation(client, event.source.userId);
-        data_influx = await data_influxx();
-        data_strapi = await data_strapii();
+        let check_line = 0;
+        let data_influx = await data_influxx();
+        let data_strapi = await data_strapii();
         const today = new Date();
         var today1 = today.toLocaleTimeString("th-TH", { timeZone: "Asia/Bangkok" });
         h = parseInt(today1.split(':')[0])
         m = parseInt(today1.split(':')[1])
         s = parseInt(today1.split(':')[2])
-        let check_line = 0;
         for (let i = 0; i < data_strapi.data.length; i++) {
           //console.log(data_strapi.data[i].attributes.name)
+          let pH = -1;
+          let tds = -1;
+          let temp = -1;
           data1 = createCarousel()
           data1[0].contents.contents.push(cover_Buble(data_strapi.data[i].attributes.factory, data_strapi.data[i].attributes.name, data_strapi.data[i].attributes.location))
           for (let j = 0; j < data_strapi.data[i].attributes.devices.data.length; j++) {
-            //console.log(data_strapi.data[i].attributes.devices.data[j].attributes.Serial)
             for (let k = 0; k < data_influx.data.length; k++) {
-              if (data_influx.data[k].topic.split('/')[2] === data_strapi.data[i].attributes.devices.data[j].attributes.Serial) {
+              if (data_influx.data[k].topic.split('/')[2] === data_strapi.data[i].attributes.devices.data[j].attributes.serialnumber) {
                 if (data_strapi.data[i].attributes.devices.data[j].attributes.sensor === "pH") {
-                  const tds = data_strapi.data[i].attributes.tds;
-                  const temp = data_influx.data[k].temp;
-                  const calcium = data_strapi.data[i].attributes.calcium;
-                  const alcalinity = data_strapi.data[i].attributes.alcalinity;
-                  const pH = data_influx.data[k].pH_value;
-                  console.log("tds : " + `${tds}`)
-                  console.log("calcium : " + `${calcium}`)
-                  console.log("temp : " + `${temp}`)
-                  console.log("alcalinity : " + `${alcalinity}`)
+                  // const tds = 320;
+                  // const temp = 25;
+                  // const calcium = 150;
+                  // const alcalinity = 34;
+                  // const pH = 7.5;
+                  temp = data_influx.data[k].temp;
+                  pH = data_influx.data[k].pH_value;
                   console.log("pH : " + `${pH}`)
-                  let { LSI, indication } = await calculateLSI(pH, tds, temp, calcium, alcalinity)
-                  //console.log(LSI)
-                  data1[0].contents.contents.push(LSI_Buble(pad(h) + ":" + pad(m), data_strapi.data[i].attributes.name, LSI.toFixed(2), temp.toFixed(2)));
                   data1[0].contents.contents.push(pH_Buble(pad(h) + ":" + pad(m), data_strapi.data[i].attributes.name, pH.toFixed(2), temp.toFixed(2)));
-                  //console.log("lenn : "+`${data1[0].contents.contents.length}`)
                 } else if (data_strapi.data[i].attributes.devices.data[j].attributes.sensor === "conductivity") {
+                  tds = data_influx.data[k].conductivity_value;
+                  console.log("tds : " + `${tds}`)
                   data1[0].contents.contents.push(CD_Buble(pad(h) + ":" + pad(m), data_strapi.data[i].attributes.name, data_influx.data[k].conductivity_value.toFixed(2), data_influx.data[k].temp.toFixed(2)));
                 }
               }
+            }
+            if (pH != -1 && tds != -1) {
+              const calcium = data_strapi.data[i].attributes.calcium;
+              const alcalinity = data_strapi.data[i].attributes.alcalinity;
+              console.log("calcium : " + `${calcium}`)
+              console.log("temp : " + `${temp}`)
+              console.log("alcalinity : " + `${alcalinity}`)
+              console.log("pH : " + `${pH}`)
+              let { LSI, indication } = await calculateLSI(pH, tds, temp, calcium, alcalinity)
+              console.log(LSI)
+              data1[0].contents.contents.push(LSI_Buble(pad(h) + ":" + pad(m), data_strapi.data[i].attributes.name, LSI.toFixed(2), temp.toFixed(2)));
             }
           }
           for (let j = 0; j < data_strapi.data[i].attributes.line_users.data.length; j++) {
