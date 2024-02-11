@@ -58,8 +58,8 @@ const main = async () => {
     for (let i = 0; i < data_strapi.data.length; i++) {
       //console.log(data_strapi.data[i].attributes.name)
       let pH = -1;
-        let tds = -1;
-        let temp = -1;
+      let tds = -1;
+      let temp = -1;
       data1 = createCarousel()
       data1[0].contents.contents.push(cover_Buble(data_strapi.data[i].attributes.factory, data_strapi.data[i].attributes.name, data_strapi.data[i].attributes.location))
       for (let j = 0; j < data_strapi.data[i].attributes.devices.data.length; j++) {
@@ -82,7 +82,7 @@ const main = async () => {
             }
           }
         }
-        if( pH != -1 && tds != -1){
+        if (pH != -1 && tds != -1) {
           const calcium = data_strapi.data[i].attributes.calcium;
           const alcalinity = data_strapi.data[i].attributes.alcalinity;
           console.log("calcium : " + `${calcium}`)
@@ -90,7 +90,7 @@ const main = async () => {
           console.log("alcalinity : " + `${alcalinity}`)
           console.log("pH : " + `${pH}`)
           let { LSI, indication } = await calculateLSI(pH, tds, temp, calcium, alcalinity)
-         console.log(LSI)
+          console.log(LSI)
           data1[0].contents.contents.push(LSI_Buble(pad(h) + ":" + pad(m), data_strapi.data[i].attributes.name, LSI.toFixed(2), temp.toFixed(2)));
         }
       }
@@ -105,7 +105,7 @@ const main = async () => {
     console.error('เกิดข้อผิดพลาดในการเรียก fetchData:', error.message);
   }
 };
-// main()
+
 startTime()
 time_counter()
 function startTime() {
@@ -121,19 +121,19 @@ function startTime() {
     test[i] = (timer2[i] * 60 * 60) - all
   }
   let positiveNumbers = test.filter(num => num > 0);
-  sort_min_positive = Math.min(...positiveNumbers)/60;
-  console.log(sort_min_positive,"MIN", formatSeconds(sort_min_positive*60))
+  sort_min_positive = Math.min(...positiveNumbers) / 60;
+  console.log(sort_min_positive, "MIN", formatSeconds(sort_min_positive * 60))
   count = 0;
 }
-function time_counter(){
-if(count!=sort_min_positive){
-  count++;
-  console.log(count,sort_min_positive)
-}else{
-  startTime();
-  main();
-}
-setTimeout(time_counter,1000*60);
+function time_counter() {
+  if (count != sort_min_positive) {
+    count++;
+    console.log(count, sort_min_positive)
+  } else {
+    startTime();
+    main();
+  }
+  setTimeout(time_counter, 1000 * 60);
 }
 
 // startTime()
@@ -180,13 +180,13 @@ async function handleEvents(event) {
       try {
         const { userId, userProfile, userName, userPic } = await getUserInformation(client, event.source.userId);
         data_influx = await data_influxx();
-        data_strapi = await data_strapii(); 
+        data_strapi = await data_strapii();
         const today = new Date();
         var today1 = today.toLocaleTimeString("th-TH", { timeZone: "Asia/Bangkok" });
         h = parseInt(today1.split(':')[0])
         m = parseInt(today1.split(':')[1])
         s = parseInt(today1.split(':')[2])
-        let check_line =0;
+        let check_line = 0;
         for (let i = 0; i < data_strapi.data.length; i++) {
           //console.log(data_strapi.data[i].attributes.name)
           data1 = createCarousel()
@@ -224,7 +224,7 @@ async function handleEvents(event) {
             }
           }
         }
-        if(check_line==0){
+        if (check_line == 0) {
           return client.replyMessage(event.replyToken, [
             {
               type: "text",

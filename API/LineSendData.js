@@ -1,4 +1,5 @@
 const axios = require('axios');
+require('dotenv').config()
 async function sendFlexMessage(mes,UID) {
   try {
     let data = JSON.stringify({
@@ -11,7 +12,7 @@ async function sendFlexMessage(mes,UID) {
       url: 'https://api.line.me/v2/bot/message/push',
       headers: {
         Authorization:
-        'Bearer 9u+EZFdUZamKg8xgz/goisGLtMDjeZZ1i6FphDqb7TwvGwkbNGa2yuy6+o9bpr1L3GCgeZTqSqwLXReOkKnqYcX40tcmtNoi7sfY2OUCEDLPVV2M9ctz5L2FgjroDgCgepR8Sj9I4XbMA4yeyYlmeAdB04t89/1O/w1cDnyilFU=',
+        'Bearer '+ process.env.token,
         'Content-Type': 'application/json',
       },
       data: data,
