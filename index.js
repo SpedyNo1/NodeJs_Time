@@ -162,7 +162,7 @@ async function handleEvents(event) {
       const { userId, userProfile, userName, userPic } = await getUserInformation(client, event.source.userId);
       return welcomeMessage(event.replyToken, userName);
     }
-    else if (event.type == "message" && event.message.text == "Register") {
+    if (event.type == "message" && event.message.text == "Register") {
       try {
         const { userId, userProfile, userName, userPic } = await getUserInformation(client, event.source.userId);
         const notitext = await userRegis(userName, userId, userPic);

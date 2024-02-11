@@ -33,7 +33,6 @@ async function userRegis(userName, userId, userPic) {
       const response = await axios(config);
       // console.log(JSON.stringify(response.data));
     }
-
     return notitext;
   } catch (error) {
     console.error(error);
