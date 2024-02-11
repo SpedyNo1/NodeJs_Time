@@ -150,6 +150,7 @@ function time_counter() {
 //     }
 // }
 //---------------------------------------------------------------------------------------------------------------
+const text_line = ["Register","Check"]
 app.post("/webhook", line.middleware(config), (req, res) => {
   Promise.all([req.body.events.map(handleEvents)]).then((result) =>
     res.json(result)
@@ -161,8 +162,7 @@ async function handleEvents(event) {
     if (event.type == "follow") {
       const { userId, userProfile, userName, userPic } = await getUserInformation(client, event.source.userId);
       return welcomeMessage(event.replyToken, userName);
-    }
-    if(event.type == "message" && event.message.text == "Register") {
+    }else if(event.type == "message" && event.message.text == "Register") {
       try {
         const { userId, userProfile, userName, userPic } = await getUserInformation(client, event.source.userId);
         const notitext = await userRegis(userName, userId, userPic);
@@ -241,7 +241,7 @@ async function handleEvents(event) {
           },
         ]);
       }
-    } else {
+    } else if (event.type == "message" && ~(text_line.includes(event.message.text))){
       return client.replyMessage(event.replyToken, [
         {
           type: "text",
