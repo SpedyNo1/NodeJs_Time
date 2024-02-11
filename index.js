@@ -234,12 +234,6 @@ async function handleEvents(event) {
         }
       } catch (error) {
         console.error(error);
-        return client.replyMessage(event.replyToken, [
-          {
-            type: "text",
-            text: "No data",
-          },
-        ]);
       }
     } else if (event.type == "message" && ~(text_line.includes(event.message.text))){
       return client.replyMessage(event.replyToken, [
