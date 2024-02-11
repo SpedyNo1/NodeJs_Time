@@ -158,6 +158,10 @@ app.post("/webhook", line.middleware(config), (req, res) => {
 async function handleEvents(event) {
   console.log(event);
   try {
+    if (event.type == "follow") {
+      const { userId, userProfile, userName, userPic } = await getUserInformation(client, event.source.userId);
+      return welcomeMessage(event.replyToken, userName);
+    }
     if(event.type == "message" && event.message.text == "Register") {
       try {
         const { userId, userProfile, userName, userPic } = await getUserInformation(client, event.source.userId);
@@ -244,10 +248,6 @@ async function handleEvents(event) {
           text: "Error!!",
         },
       ]);
-    }
-    if (event.type == "follow") {
-      const { userId, userProfile, userName, userPic } = await getUserInformation(client, event.source.userId);
-      return welcomeMessage(event.replyToken, userName);
     }
   } catch (error) {
     console.error("Error handling events:", error);
