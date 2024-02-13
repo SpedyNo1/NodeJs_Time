@@ -40,7 +40,7 @@ app.get('/about', (req, res) => {
   res.render('about')
 })
 app.get("/test", (req, res) => {
-  res.send("ok");
+  res.send(`Server is running on port ${port}`);
 });
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)
