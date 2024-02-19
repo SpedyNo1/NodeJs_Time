@@ -17,7 +17,6 @@ async function sendFlexMessage(mes,UID) {
       },
       data: data,
     };
-
     const response = await axios(config);
     console.log('Message sent successfully:', response.data);
   } catch (error) {
